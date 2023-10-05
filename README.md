@@ -3,7 +3,7 @@
 
 # Тестовое задание для SML
 
-### Тестовое задание (оригинальное)
+### Тестовое задание (оригинальное описание)
 
 Реализовать REST АПИ для клиентского приложения, которое должно отображать страницу со списком студентов с возможностями:
 1. добавить нового студента в список;
@@ -27,12 +27,6 @@ Java, Spring Framework, PostgreSQL, Spring-data, Liquibase/Flyway, Swagger, Dock
 
 ---
 
-### Как запустить?  
-
-// TODO
-
----
-
 ### Используемый мной стек:
 * Java 17
 * Maven
@@ -40,5 +34,38 @@ Java, Spring Framework, PostgreSQL, Spring-data, Liquibase/Flyway, Swagger, Dock
 * PostgreSQL
 * Liquibase
 * JUnit 5
+* JoCoCo
 * Swagger
 * Docker
+
+---
+
+### Инструкция по развертыванию  
+
+#### Локально для разработки
+
+1. Создать базу данных test_app в PostgreSQL 12+.
+Проверить "src/main/resources/application-local.properties".
+2. Установить JDK 17
+3. В IDEA запустить Main.class -> "Configuration" -> "Edit..." -> В "Active profiles" установить "local".
+
+#### Docker
+
+Приложение после запуска доступно по http://localhost:8080/, можно изменить порт в docker-compose.yml.
+
+~~~
+$ docker-compose build
+$ docker-compose up
+~~~
+
+Sql скрипты из папки db/scripts сами запустятся в контейнере, если база данных ранее не была проинициализирована.
+Файлы бд будут смонтированы в /target, можно просто сделать *mvn clean*.
+
+---
+
+### Swagger
+
+При запущенном приложение Swagger доступен по следующей ссылке:
+http://localhost:8080/swagger-ui/index.html
+
+![swagger](img/img.png)

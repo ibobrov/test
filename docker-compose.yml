@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=test_app
+      - PGDATA=/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./db/scripts:/docker-entrypoint-initdb.d/
+      - ./target/test_app/data:/var/lib/postgresql/data
+    restart: always
+  bobrov_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db/test_app
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - "127.0.0.1:8080:8080"
+    container_name: test_app
+    depends_on:
+      - db
